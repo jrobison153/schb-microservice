@@ -1,0 +1,52 @@
+/*
+scenario no changes are made because bulid.gradle file does not exist
+
+let artifactId = "my_new_project"
+
+given
+    ArchiveRoot
+
+when
+    UpdateGradleMavenJavaPublish artifact_id = artifactId
+
+then
+    NoChange
+
+
+scenario successfully adds maven publish to existing build.gradle file
+
+let artifactId = "my_new_project"
+
+given
+    build.gradle = """
+    group 'com.spacecorpshandbook.ostium'
+    version '1.0.0-SNAPSHOT'
+    """
+
+when
+    UpdateGradleMavenJavaPublish artifact_id = artifactId
+
+then
+    fileContains "build.gradle" "apply plugin: 'maven-publish'"
+        and fileContains "build.gradle" "publishing {"
+        and fileContains "build.gradle" "publications {"
+        and fileContains "build.gradle" "mavenJava(MavenPublication) {"
+        and fileContains "build.gradle" "from components.java"
+        and fileContains "build.gradle" "artifactId 'my_new_project'"
+        and fileContains "build.gradle" "group 'com.spacecorpshandbook.ostium'"
+
+
+scenario no changes made to build.grade because it already has a maven publish configuration
+
+let artifactId = "my_new_project"
+
+given
+    build.gradle = """
+    group 'com.spacecorpshandbook.ostium'
+    version '1.0.0-SNAPSHOT'
+    """
+
+when
+    UpdateGradleMavenJavaPublish artifact_id = artifactId
+
+    */

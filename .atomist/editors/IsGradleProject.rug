@@ -1,0 +1,8 @@
+@description "Only work on projects that have a build.gradle file"
+predicate IsGradleProject
+
+let testFile = "build.gradle"
+
+with Project p
+    when {p.fileExists(testFile)}
+

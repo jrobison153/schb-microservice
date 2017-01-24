@@ -1,0 +1,17 @@
+@description "Updates an existing build.gradle file by applying the maven-publish plugin and configures publishing of the artifact"
+@tag "gradle"
+@tag "build"
+editor UpdateGradleMavenJavaPublish
+
+precondition IsGradleProject
+
+@displayName "Artifact ID"
+@description "Artifact identifier used by Gradle, will be the artifact name published to the maven repository"
+@validInput "A valid Maven artifact ID, which starts with a lower-case letter and contains only alphanumeric, -, and _ characters"
+param artifact_id: @artifact_id
+
+let buildGradleFilename = "build.gradle"
+let publishTemplate = "maven_publish.vm"
+
+with Gradle
+    do updatePublications java artifact_id

@@ -1,0 +1,26 @@
+@description "adds the core directory and boilerplate files"
+editor AddCore
+
+uses atomist-rugs.common-editors.AddScalaMavenGitIgnore
+
+@displayName "Project Name"
+@description "Name of the new project"
+@validInput "A valid GitHub project name, which has only alphanumeric, -, ., and _ characters, less than 22 characters"
+@minLength 1
+@maxLength 21
+param project_name: @project_name
+
+@displayName "Group ID"
+@description "Group identifier used by Gradle"
+@validInput "A valid Maven group ID, which starts with a letter, -, or _ and contains only alphanumeric, -, and _ characters and may having leading period separated identifiers starting with letters or underscores and containing only alphanumeric and _ characters."
+param group_id: @group_id
+
+@displayName "Version"
+@description "Current version of the project"
+@validInput "A valid semantic version, http://semver.org"
+@default "0.1.0"
+@optional
+param version: @semantic_version
+
+AddGradle target_dir = project_name
+AddScalaMavenGitIgnore target_dir = project_name

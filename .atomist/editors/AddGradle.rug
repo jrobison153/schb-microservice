@@ -1,0 +1,41 @@
+@description "adds a project specific build.gradle"
+@tag "gradle"
+@tag "build"
+editor AddGradle
+
+@displayName "Group ID"
+@description "Group identifier used by Gradle"
+@validInput "A valid Maven group ID, which starts with a letter, -, or _ and contains only alphanumeric, -, and _ characters and may having leading period separated identifiers starting with letters or underscores and containing only alphanumeric and _ characters."
+param group_id: @group_id
+
+@displayName "Version"
+@description "Current version of the project"
+@validInput "A valid semantic version, http://semver.org"
+@default "0.1.0"
+@optional
+param version: @semantic_version
+
+@displayName "Target Directory"
+@description "The path of the directory in to which to place the .gitignore"
+@validInput "A unix style directory path, relative to the project root, in which to create the .gitignore file"
+@default "/"
+@minLength 0
+@maxLength 255
+param target_dir: ^[^\\0]+$
+
+let buildGradleTemplate = "build.gradle.vm"
+let buildGradleFilename = "build.gradle"
+
+let processedTarget = {
+   var res = target_dir;
+   if(!res.startsWith("/")){
+     res = "/" + res
+   }
+   if(!res.endsWith("/")){
+     res += "/"
+   }
+   return res
+}
+
+with Project
+  do merge buildGradleTemplate to {processedTarget + buildGradleFilename}

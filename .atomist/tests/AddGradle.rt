@@ -1,0 +1,16 @@
+scenario AddGradle should add build.gradle
+
+let gradleFile = "build.gradle"
+let version = "0.1.0-SNAPSHOT"
+let groupId = "org.foo.bar"
+
+given
+    ArchiveRoot
+
+when
+    AddGradle group_id = groupId, version = version
+
+then
+    fileExists gradleFile
+        and fileContains gradleFile version
+        and fileContains gradleFile groupId

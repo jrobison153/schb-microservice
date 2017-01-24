@@ -1,0 +1,16 @@
+scenario adds the core directory structure and boilerplate files
+
+let version = "0.1.0-SNAPSHOT"
+let groupId = "org.foo.bar"
+let buildGradle = "build.gradle"
+let gitIgnore = ".gitignore"
+
+given
+    ArchiveRoot
+
+when
+    AddCore project_name = "core", group_id = groupId, version = version
+
+then
+    fileExists {'core/' + buildGradle}
+    and fileExists {'core/' + gitIgnore}
